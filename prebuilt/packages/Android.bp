@@ -1,0 +1,24 @@
+android_app_import {
+    name: "LatinIMEGooglePrebuilt_Override",
+    owner: "google",
+    apk: "LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk",
+    presigned: true,
+    preprocessed: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    product_specific: true,
+    overrides: ["LatinIME"],
+}
+
+android_app_import {
+    name: "LatinIMEGooglePrebuilt",
+    owner: "google",
+    apk: "LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk",
+    presigned: true,
+    preprocessed: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    product_specific: true,
+}

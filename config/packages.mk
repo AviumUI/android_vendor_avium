@@ -10,3 +10,11 @@ ifeq ($(TARGET_INCLUDE_GOOGLEIME),true)
             LatinIMEGooglePrebuilt
     endif
 endif
+
+# AviumUI Apps
+PRODUCT_PACKAGES += \
+    FeatureSettings \
+    AviumSystemUITools \
+    MoonOCR \
+    ExthmUseful \
+    MoonWidget

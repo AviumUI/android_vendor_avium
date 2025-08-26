@@ -16,3 +16,4 @@ TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 $(call inherit-product, vendor/avium/config/packages.mk)
 $(call inherit-product, vendor/avium/config/overlay.mk)
 $(call inherit-product, vendor/avium/config/version.mk)
+$(call inherit-product, vendor/avium/config/sepolicy.mk)

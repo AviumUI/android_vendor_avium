@@ -1,0 +1,6 @@
+# Custom version
+ro.avium.version                     u:object_r:custom_version_prop:s0
+ro.avium.display.version             u:object_r:custom_version_prop:s0
+ro.avium.build.version               u:object_r:custom_version_prop:s0
+ro.avium.releasetype                 u:object_r:custom_version_prop:s0
+ro.avium.maintainer                  u:object_r:custom_version_prop:s0

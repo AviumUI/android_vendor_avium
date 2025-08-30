@@ -17,4 +17,6 @@ PRODUCT_PACKAGES += \
     AviumSystemUITools \
     MoonOCR \
     ExthmUseful \
-    MoonWidget
+    MoonWidget \
+    CatShareForAvium \
+    Via

@@ -19,4 +19,5 @@ PRODUCT_PACKAGES += \
     ExthmUseful \
     MoonWidget \
     CatShareForAvium \
-    Via
+    Via \
+    AviumSetup

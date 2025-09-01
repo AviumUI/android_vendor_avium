@@ -20,4 +20,5 @@ PRODUCT_PACKAGES += \
     MoonWidget \
     CatShareForAvium \
     Via \
-    AviumSetup
+    AviumSetup \
+    GameSpace

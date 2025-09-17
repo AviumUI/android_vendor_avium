@@ -1,0 +1,7 @@
+allow {
+ permissioncontroller_app
+ rkpdapp
+ system_app
+ platform_app
+ shell
+ } zygote:unix_stream_socket getopt;

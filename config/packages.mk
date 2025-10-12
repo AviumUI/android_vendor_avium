@@ -21,8 +21,8 @@ PRODUCT_PACKAGES += \
     CatShareForAvium \
     Via \
     AviumSetup \
-    GameSpace \
     AviumLockscreenEdit
+# TODO: Need GameSpace
 
 # Updater
 ifeq ($(AVIUM_BUILDTYPE),Official)

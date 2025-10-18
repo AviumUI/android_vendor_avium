@@ -1,0 +1,16 @@
+//
+// SPDX-FileCopyrightText: 2025 The AviumUI Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app_import {
+    name: "ConsumerIRApp",
+    owner: "oplus",
+    apk: "ConsumerIRApp.apk",
+    preprocessed: true,
+    presigned: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    product_specific: true,
+}

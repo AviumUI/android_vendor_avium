@@ -22,7 +22,8 @@ PRODUCT_PACKAGES += \
     Via \
     AviumSetup \
     AviumLockscreenEdit \
-    AviumSystemUIEX
+    AviumSystemUIEX \
+    BtHelper
 
 # TODO: Need GameSpace
 

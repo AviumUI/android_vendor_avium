@@ -1,7 +1,7 @@
 TOP=$(gettop)
 function get_gms() {
     if [ -z "$GMS_URL" ]; then
-        GMS_URL="https://github.com/AviumUI/proprietary_vendor_google_gms"
+        GMS_URL="https://github.com/AviumUI/proprietary_vendor_gms"
     fi
 
     if ! [ -n "$TOP" ];then
@@ -18,7 +18,7 @@ function get_gms() {
         echo "Please check your network connection and URL."
         echo "HTTP response code: $https_code"
         echo "You can set the GMS_URL environment variable to use a different mirror."
-        echo "For example: export GMS_URL=https://github.com/AviumUI/proprietary_vendor_google_gms"
+        echo "For example: export GMS_URL=https://github.com/AviumUI/proprietary_vendor_gms"
         echo "If you are behind a proxy, please configure your proxy settings."
         echo "Skipping GMS download."
         echo
@@ -36,11 +36,11 @@ cat >> "$TOP/.repo/avium_gms.xml" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
     <remote name="avium-gmsurl" fetch="$GMS_URL" />
-  <project path="vendor/google/gms" name="proprietary_vendor_google_gms" remote="avium-gmsurl" />
+  <project path="vendor/gms" name="proprietary_vendor_gms" remote="avium-gmsurl" />
 </manifest>
 EOF
 mv "$TOP/.repo/avium_gms.xml" "$TOP/.repo/local_manifests/avium_gms.xml"
-repo sync --force-sync --force-checkout vendor/google/gms
+repo sync --force-sync --force-checkout vendor/gms
 }
 
 function remove_gms() {
@@ -50,10 +50,10 @@ function remove_gms() {
         exit 1
     fi
     rm -rf "$TOP/.repo/local_manifests/avium_gms.xml"
-    rm -rf "$TOP/vendor/google/gms"
-    rm -rf "$TOP/.repo/project-objects/proprietary_vendor_google_gms.git"
-    rm -rf "$TOP/.repo/projects/vendor/google/gms.git"
-    echo "GMS files removed. You can run 'get_gms' to download them again."
+    rm -rf "$TOP/vendor/gms"
+    rm -rf "$TOP/.repo/project-objects/proprietary_vendor_gms.git"
+    rm -rf "$TOP/.repo/projects/vendor/gms.git"
+    echo "GMS files removed. You can run 'avium get_gms' to download them again."
 }
 function avium_build() {
     local avium_device="$1"

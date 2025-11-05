@@ -1,0 +1,11 @@
+cc_library_shared {
+    name: "libavium_utils",
+    srcs: ["avium_utils.cpp"],
+    export_include_dirs: ["."],
+    recovery_available: true,
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "liblogwrap",
+    ],
+}

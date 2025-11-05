@@ -26,21 +26,14 @@ function get_gms() {
         return 1
         exit 1
     fi
-    repo_sync_gms
+    git_sync_gms
     echo "GMS files downloaded. You can run 'avium remove_gms' to delete them."
+    echo "To update, 'cd vendor/gms', then run 'git pull'"
 
 }
 
-function repo_sync_gms() {
-cat >> "$TOP/.repo/avium_gms.xml" <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-    <remote name="avium-gmsurl" fetch="$GMS_URL" />
-  <project path="vendor/gms" name="proprietary_vendor_gms" remote="avium-gmsurl" />
-</manifest>
-EOF
-mv "$TOP/.repo/avium_gms.xml" "$TOP/.repo/local_manifests/avium_gms.xml"
-repo sync --force-sync --force-checkout vendor/gms
+function git_sync_gms() {
+	git clone --depth=1 $GMS_URL $TOP/vendor/gms
 }
 
 function remove_gms() {
@@ -49,11 +42,16 @@ function remove_gms() {
         return 1
         exit 1
     fi
+    # Due to some historical reasons, some builders still remain old
+    # method to download the gms.
+    # TODO: Remove this when capable.
     rm -rf "$TOP/.repo/local_manifests/avium_gms.xml"
     rm -rf "$TOP/vendor/gms"
     rm -rf "$TOP/.repo/project-objects/proprietary_vendor_gms.git"
     rm -rf "$TOP/.repo/projects/vendor/gms.git"
-    echo "GMS files removed. You can run 'avium get_gms' to download them again."
+    rm -rf "$TOP/.repo/project-objects/proprietary_vendor_google_gms.git"
+    rm -rf "$TOP/.repo/projects/vendor/google/gms.git"
+    echo "GMS files removed. You can run 'get_gms' to download them again."
 }
 function avium_build() {
     local avium_device="$1"

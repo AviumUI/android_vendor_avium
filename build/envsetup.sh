@@ -1,35 +1,67 @@
 TOP=$(gettop)
 function get_gms() {
+
+    # Default URL if user didn't set GMS_URL
     if [ -z "$GMS_URL" ]; then
         GMS_URL="https://github.com/AviumUI/proprietary_vendor_gms"
     fi
 
-    if ! [ -n "$TOP" ];then
-        echo "Couldn't locate the top of the tree.  Try setting TOP."
-        return 1
-        exit 1
+    # Default branch if user didn't set GMS_BRANCH
+    if [ -z "$GMS_BRANCH" ]; then
+        GMS_BRANCH="avium-16"
     fi
-    mkdir -p "$TOP/.repo/local_manifests"
-    https_code=$(curl -s -o /dev/null -w "%{http_code}\n" $GMS_URL)
-    
-    if ! [ $https_code -eq 200 ]; then
+
+    local TARGET_BRANCH="$GMS_BRANCH"
+
+    # Ensure TOP exists
+    if ! [ -n "$TOP" ]; then
+        echo "Couldn't locate the top of the tree. Try setting TOP."
+        return 1
+    fi
+
+    echo "Checking GMS repository..."
+    echo "URL: $GMS_URL"
+    echo "Branch to check: $TARGET_BRANCH"
+    echo
+
+    echo -n "Checking repository / branch availability... "
+
+    if ! output=$(git ls-remote --heads "$GMS_URL" "$TARGET_BRANCH" 2>/dev/null); then
+        echo "FAILED"
         echo "Error: Unable to access $GMS_URL"
         echo
         echo "Please check your network connection and URL."
-        echo "HTTP response code: $https_code"
-        echo "You can set the GMS_URL environment variable to use a different mirror."
-        echo "For example: export GMS_URL=https://github.com/AviumUI/proprietary_vendor_gms"
-        echo "If you are behind a proxy, please configure your proxy settings."
+        echo "You can set GMS_URL to use a different mirror."
+        echo "  export GMS_URL=https://github.com/AviumUI/proprietary_vendor_gms"
+        echo "If you are behind a proxy, please check your proxy settings."
+        echo
         echo "Skipping GMS download."
         echo
         echo "You can run 'avium get_gms' again after fixing the issue."
         return 1
-        exit 1
     fi
+
+    if [ -z "$output" ]; then
+        echo "FAILED"
+        echo "Error: Branch '$TARGET_BRANCH' does NOT exist on:"
+        echo "  $GMS_URL"
+        echo
+        echo "To override the branch, set:"
+        echo "  export GMS_BRANCH=<branch>"
+        echo
+        echo "Skipping GMS download."
+        echo
+        echo "You can run 'avium get_gms' again after fixing the issue."
+        return 1
+    fi
+
+    echo "OK"
+    echo
+
     git_sync_gms
+
     echo "GMS files downloaded. You can run 'avium remove_gms' to delete them."
     echo "To update, 'cd vendor/gms', then run 'git pull'"
-
 }
 
 function git_sync_gms() {

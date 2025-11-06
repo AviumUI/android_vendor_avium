@@ -7,3 +7,4 @@ ro.avium.maintainer                  u:object_r:custom_version_prop:s0
 
 # Avium Prop
 persist.avium.                       u:object_r:system_prop:s0
+ro.avium.                            u:object_r:system_prop:s0

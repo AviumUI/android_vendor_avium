@@ -3,7 +3,7 @@ function get_gms() {
 
     # Default URL if user didn't set GMS_URL
     if [ -z "$GMS_URL" ]; then
-        GMS_URL="https://github.com/AviumUI/proprietary_vendor_gms"
+        GMS_URL="https://codeberg.org/AviumUI/vendor_gms"
     fi
 
     # Default branch if user didn't set GMS_BRANCH
@@ -32,7 +32,7 @@ function get_gms() {
         echo
         echo "Please check your network connection and URL."
         echo "You can set GMS_URL to use a different mirror."
-        echo "  export GMS_URL=https://github.com/AviumUI/proprietary_vendor_gms"
+        echo "  export GMS_URL=https://codeberg.org/AviumUI/vendor_gms"
         echo "If you are behind a proxy, please check your proxy settings."
         echo
         echo "Skipping GMS download."

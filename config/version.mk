@@ -23,9 +23,19 @@ else
     AVIUM_PACKAGE_NAME := AviumUI-$(PLATFORM_VERSION)-$(LINEAGE_BUILD)-$(AVIUM_BUILD_DATE)-Unofficial
 endif
 
+# GMS Status
+ifeq ($(WITH_GMS), true)
+    AVIUM_VERSION := $(AVIUM_VERSION)-GMS
+    AVIUM_PACKAGE_NAME := $(AVIUM_PACKAGE_NAME)-GMS
+else
+    AVIUM_VERSION := $(AVIUM_VERSION)-Vanilla
+    AVIUM_PACKAGE_NAME := $(AVIUM_PACKAGE_NAME)-Vanilla
+endif
+
 # AviumUI version properties
 PRODUCT_SYSTEM_PROPERTIES += \
     ro.avium.version=$(AVIUM_VER) \
     ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \
     ro.avium.build.version=$(PLATFORM_VERSION) \
-    ro.avium.releasetype=$(AVIUM_BUILDTYPE)
+    ro.avium.releasetype=$(AVIUM_BUILDTYPE) \
+    ro.avium.gms_status=$(WITH_GMS)

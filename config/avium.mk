@@ -32,3 +32,7 @@ $(call inherit-product, vendor/avium/config/sepolicy.mk)
 $(call inherit-product, vendor/avium/config/gms.mk)
 $(call inherit-product, vendor/avium/config/soong_namespace.mk)
 $(call inherit-product, vendor/avium/config/prop.mk)
+
+# AviumUI init
+PRODUCT_COPY_FILES += \
+     vendor/avium/prebuilt/common/etc/init/init.avium.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.avium.rc

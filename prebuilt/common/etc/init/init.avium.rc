@@ -1,0 +1,4 @@
+on post-fs-data
+   mkdir /data/avium/wallpaper 0770 system system encryption=Require
+   mkdir /metadata/avium 0770 system system
+

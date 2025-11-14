@@ -31,7 +31,4 @@ $(call inherit-product, vendor/avium/config/version.mk)
 $(call inherit-product, vendor/avium/config/sepolicy.mk)
 $(call inherit-product, vendor/avium/config/gms.mk)
 $(call inherit-product, vendor/avium/config/soong_namespace.mk)
-
-# Enable Material Design 3 Expressive
-PRODUCT_PRODUCT_PROPERTIES += \
-    is_expressive_design_enabled=true
+$(call inherit-product, vendor/avium/config/prop.mk)

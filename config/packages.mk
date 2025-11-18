@@ -33,7 +33,7 @@ PRODUCT_PACKAGES += \
 # TODO: Need GameSpace
 
 # Updater
-ifeq ($(AVIUM_BUILDTYPE),Official)
+ifeq ($(AVIUM_IS_OFFICIAL),true)
 PRODUCT_PACKAGES += \
     Updater
 

@@ -1,20 +1,33 @@
 # AviumUI configuration file
 
-# Build 
-AVIUM_BUILDTYPE ?= Unoffical
+# Build
+# AVIUM_BUILDTYPE is a string that represents the build type.
+# This flag is used to distinguish build types.
+# It can be set to "Release" or "Test".
+# Default is "Test".
+AVIUM_BUILDTYPE ?= Test
+# AVIUM_IS_OFFICIAL is a boolean flag to indicate 
+# whether the build is official or unofficial.
+AVIUM_IS_OFFICIAL ?= false
+# AVIUM_VERSION_APPEND_TIME_OF_DAY is a boolean flag to indicate
+# whether to append time of day to the build date.
 AVIUM_VERSION_APPEND_TIME_OF_DAY ?= false
 
 # GMS
+# WITH_GMS is a boolean flag to indicate 
+# whether to include Google Mobile Services (GMS) in the build.
 WITH_GMS ?= false
 # GMS_TYPE has two options: FULL and CORE
 # If WITH_GMS is true and GMS_TYPE is not set, it will default to CORE
 GMS_TYPE ?= CORE
 
 # Maintainer
+# AVIUM_MAINTAINER is a string that represents the maintainer of the build.
 AVIUM_MAINTAINER ?= Unknown
 
 # LatinIMEGooglePrebuilt
-# If WITH_GMS is true, TARGET_INCLUDE_GOOGLEIME and TARGET_GOOGLEIME_OVERRIDE_IME will be forced to true
+# If WITH_GMS is true, Google LatinIME will be included 
+# and forced override the default IME.
 TARGET_INCLUDE_GOOGLEIME ?= false
 TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 
@@ -22,6 +35,10 @@ TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 # Set to true to enable spoofing fake props.
 # For letting apps think they are running on a locked device.
 AVIUM_FORCE_SET_FAKE_PROP ?= false
+
+# Blur Effect
+# Set to true to enable blur effect in system UI.
+TARGET_ENABLE_BLUR ?= false
 
 # Include configs
 $(call inherit-product, vendor/avium/config/packages.mk)

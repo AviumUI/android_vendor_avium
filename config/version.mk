@@ -31,11 +31,3 @@ else
     AVIUM_VERSION := $(AVIUM_VERSION)-Vanilla
     AVIUM_PACKAGE_NAME := $(AVIUM_PACKAGE_NAME)-Vanilla
 endif
-
-# AviumUI version properties
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.avium.version=$(AVIUM_VER) \
-    ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \
-    ro.avium.build.version=$(PLATFORM_VERSION) \
-    ro.avium.releasetype=$(AVIUM_BUILDTYPE) \
-    ro.avium.gms_status=$(WITH_GMS)

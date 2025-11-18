@@ -12,7 +12,6 @@ GMS_TYPE ?= CORE
 
 # Maintainer
 AVIUM_MAINTAINER ?= Unknown
-PRODUCT_SYSTEM_PROPERTIES += ro.avium.maintainer=$(AVIUM_MAINTAINER)
 
 # LatinIMEGooglePrebuilt
 # If WITH_GMS is true, TARGET_INCLUDE_GOOGLEIME and TARGET_GOOGLEIME_OVERRIDE_IME will be forced to true

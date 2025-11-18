@@ -6,7 +6,7 @@
 # AviumUI version properties
 PRODUCT_SYSTEM_PROPERTIES += \
 	ro.avium.build.version=$(PLATFORM_VERSION) \
-	ro.avium.buildtype=$(AVIUM_BUILDTYPE)	\
+	ro.avium.buildtype=$(AVIUM_BUILDTYPE) \
     ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \
     ro.avium.gms_status=$(WITH_GMS) \
 	ro.avium.maintainer=$(AVIUM_MAINTAINER) \

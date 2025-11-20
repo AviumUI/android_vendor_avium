@@ -1,4 +1,11 @@
 on post-fs-data
-   mkdir /data/avium/wallpaper 0770 system system encryption=Require
-   mkdir /metadata/avium 0770 system system
 
+    mkdir /metadata/avium 0770 system system
+    mkdir /data/system/avium 0775 system system
+    restorecon_recursive /data/system/avium
+
+on property:persist.avium.depthwallpaper=0
+    copy /system_ext/media/wallpaper/mask /data/system/avium/mask
+    copy /system_ext/media/wallpaper/wallpaper /data/system/avium/wallpaper
+    chmod 0777 /data/system/avium/mask
+    chmod 0777 /data/system/avium/wallpaper

@@ -1,1 +1,2 @@
 /metadata/avium(/.*)?    u:object_r:avium_metadata_file:s0
+/data/system/avium(/.*)?    u:object_r:avium_data_file:s0

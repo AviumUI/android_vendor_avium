@@ -1,1 +1,6 @@
 type avium_metadata_file, file_type, data_file_type;
+type avium_data_file, file_type, data_file_type, core_data_file_type, mlstrustedobject;
+
+allow platform_app avium_data_file:dir create_dir_perms;
+allow platform_app avium_data_file:file create_file_perms;
+allow platform_app avium_data_file:dir { getattr setattr };

@@ -22,6 +22,8 @@
 namespace avium {
 namespace utils {
 
+// log message to both android log and stdout
+void LogWithStdOut(const std::string& status, const std::string& message);
 
 // read config file and parse key-value pairs into a map
 std::map<std::string, std::string> ParseConfigFile(const std::string& config_path);

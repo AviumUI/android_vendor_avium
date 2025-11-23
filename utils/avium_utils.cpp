@@ -19,6 +19,7 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include <iostream>
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
@@ -28,6 +29,34 @@ using android::base::ReadFileToString;
 
 namespace avium {
 namespace utils {
+
+void StdOutLog(const std::string& status, const std::string& message) {
+    std::cout << status << ": " << message << std::endl;
+}
+
+void LogWithStdOut(const std::string& status, const std::string& message) {
+    if (message.empty()) {
+        return;
+    }
+    if (status.empty()) {
+        LOG(INFO) << "Log level is empty, default to info";
+        StdOutLog("I", "Log level is empty, default to info");
+        LOG(INFO) << message;
+        StdOutLog("I", message);
+    }else if (status == "E" || status == "ERROR") {
+        LOG(ERROR) << message;
+    } else if (status == "W" || status == "WARNING") {
+        LOG(WARNING) << message;
+    } else if (status == "I" || status == "INFO") {
+        LOG(INFO) << message;
+    } else if (status == "D" || status == "DEBUG") {
+        LOG(DEBUG) << message;
+    } else {
+        LOG(INFO) << "Unknown log level: " << status << ", defaulting to INFO";
+        LOG(INFO) << message;
+    }
+    StdOutLog(status, message);
+}
 
 inline std::string Trim(const std::string &s) {
     auto start = s.find_first_not_of(" \t");

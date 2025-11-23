@@ -99,5 +99,19 @@ bool IsEnabled(const std::map<std::string, std::string>& config,
     return result;
 }
 
+std::string GetConfigValue(const std::map<std::string, std::string>& config,
+              const std::string& key,
+              const std::string& default_value) {
+    auto it = config.find(key);
+    if (it == config.end()) {
+        LOG(INFO) << "Config key \"" << key << "\" not found -> using default value: \""
+                  << default_value << "\"";
+        return default_value;
+        
+    }
+    LOG(INFO) << "Config key \"" << key << "\" = \"" << it->second << "\"";
+    return it->second;
+}
+
 }  // namespace utils
 }  // namespace avium

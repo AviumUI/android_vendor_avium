@@ -31,5 +31,10 @@ bool IsEnabled(const std::map<std::string, std::string>& config,
                const std::string& key,
                bool default_value);
 
+// get the value of a given key in the config map
+std::string GetConfigValue(const std::map<std::string, std::string>& config,
+                           const std::string& key,
+                           const std::string& default_value);
+
 }  // namespace utils
 }  // namespace avium

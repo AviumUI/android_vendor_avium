@@ -16,14 +16,18 @@
 
 #include "avium_utils.h"
 
+#include <sys/klog.h>
 #include <sstream>
 #include <string>
+#include <vector>
 #include <map>
 #include <iostream>
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
 
+#define SYSLOG_ACTION_SIZE_BUFFER 10
+#define SYSLOG_ACTION_READ_ALL    3
 
 using android::base::ReadFileToString;
 
@@ -140,6 +144,25 @@ std::string GetConfigValue(const std::map<std::string, std::string>& config,
     }
     LOG(INFO) << "Config key \"" << key << "\" = \"" << it->second << "\"";
     return it->second;
+}
+
+std::string GetKmsg() {
+    int size = klogctl(SYSLOG_ACTION_SIZE_BUFFER, nullptr, 0);
+    if (size < 0) {
+        perror("klogctl size");
+        return "error: klogctl size failed";
+    }
+    // get klog
+    std::vector<char> buffer(size + 1);
+    int n = klogctl(SYSLOG_ACTION_READ_ALL, buffer.data(), size);
+    if (n < 0) {
+        perror("klogctl read");
+        return "error: klogctl read failed";
+    }
+    buffer[n] = '\0';
+    
+    std::string klog(buffer.data());
+    return klog;
 }
 
 }  // namespace utils

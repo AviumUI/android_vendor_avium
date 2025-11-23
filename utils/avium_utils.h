@@ -38,5 +38,8 @@ std::string GetConfigValue(const std::map<std::string, std::string>& config,
                            const std::string& key,
                            const std::string& default_value);
 
+// get kernel log as a string
+std::string GetKmsg();
+
 }  // namespace utils
 }  // namespace avium

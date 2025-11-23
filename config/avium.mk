@@ -33,9 +33,12 @@ AVIUM_VERSION_APPEND_TIME_OF_DAY ?= false
 # WITH_GMS is a boolean flag to indicate 
 # whether to include Google Mobile Services (GMS) in the build.
 WITH_GMS ?= false
-# GMS_TYPE has two options: FULL and CORE
-# If WITH_GMS is true and GMS_TYPE is not set, it will default to CORE
-GMS_TYPE ?= CORE
+# TARGET_GMS_TYPE has 3 options: FULL, MINI and PICO.
+# FULL: The most complete GMS components
+# MINI: The part of necessary GMS components
+# PICO: The minimum GMS core components
+# If WITH_GMS is true and TARGET_GMS_TYPE is not set, it will default to MINI
+TARGET_GMS_TYPE ?= MINI
 
 # Maintainer
 # AVIUM_MAINTAINER is a string that represents the maintainer of the build.

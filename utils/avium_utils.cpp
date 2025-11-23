@@ -35,22 +35,29 @@ inline std::string Trim(const std::string &s) {
     return (start == std::string::npos) ? "" : s.substr(start, end - start + 1);
 }
 
-std::map<std::string, bool> ParseConfigFile(const std::string& config_path) {
-    std::map<std::string, bool> config_map;
+std::map<std::string, std::string> ParseConfigFile(const std::string& config_path) {
+    std::map<std::string, std::string> config_map;
     std::string file_contents;
+
     if (!android::base::ReadFileToString(config_path, &file_contents)) {
-        LOG(INFO) << "Config file not found (" << config_path << "), returning empty config.";
+        LOG(INFO) << "Config file not found (" << config_path << "), creating empty file.";
+
+        if (!android::base::WriteStringToFile("", config_path)) {
+            LOG(ERROR) << "Failed to create config file: " << config_path;
+        }
+
         return config_map;
     }
 
     std::istringstream stream(file_contents);
     std::string line;
+
     while (std::getline(stream, line)) {
-        // Remove comments
         auto comment_pos = line.find('#');
         if (comment_pos != std::string::npos) {
             line = line.substr(0, comment_pos);
         }
+
         line = Trim(line);
         if (line.empty()) continue;
 
@@ -60,21 +67,35 @@ std::map<std::string, bool> ParseConfigFile(const std::string& config_path) {
         std::string key = Trim(line.substr(0, eq_pos));
         std::string value = Trim(line.substr(eq_pos + 1));
 
-        //Covert value to bool
-        bool enabled = (value == "true" || value == "1");
-        config_map[key] = enabled;
+        config_map[key] = value;
     }
 
     return config_map;
 }
 
-bool IsEnabled(const std::map<std::string, bool>& config, 
+bool IsEnabled(const std::map<std::string, std::string>& config, 
                const std::string& key,
-               bool default_value = true) {
+               bool default_value) {
+
     auto it = config.find(key);
-    bool result = (it != config.end()) ? it->second : default_value;
-    LOG(INFO) << "Config key \"" << key << "\" -> " 
-              << (result ? "enabled" : "disabled");
+    if (it == config.end()) {
+        LOG(INFO) << "Config key \"" << key << "\" not found -> "
+                  << (default_value ? "enabled(default)" : "disabled(default)");
+        return default_value;
+    }
+
+    std::string value = it->second;
+
+    std::transform(value.begin(), value.end(), value.begin(), ::tolower);
+
+    bool result = (value == "1" ||
+                   value == "true" ||
+                   value == "yes" ||
+                   value == "on" ||
+                   value == "enabled");
+
+    LOG(INFO) << "Config key \"" << key << "\" = \"" << it->second
+              << "\" -> " << (result ? "enabled" : "disabled");
     return result;
 }
 

@@ -101,6 +101,24 @@ function remove_gms() {
     rm -rf "$TOP/.repo/projects/vendor/google/gms.git"
     echo "GMS files removed. You can run 'get_gms' to download them again."
 }
+
+function merge_file_parts() {
+    local target_file="$1"
+
+    if [[ -z "$target_file" ]]; then
+        echo "[AviumUI envsetup] ERROR: merge_file_parts() requires a target file path." >&2
+        return 1
+    fi
+
+    [[ -f "$target_file" ]] && return
+
+    local part_prefix="$target_file"
+
+    local parts=($(ls ${part_prefix}.*.part 2>/dev/null | sort -V))
+
+    cat "${parts[@]}" > "$target_file"
+}
+
 function avium_build() {
     local avium_device="$1"
     local avium_variant="$2"
@@ -189,3 +207,6 @@ function avium() {
             ;;
     esac
 }
+
+merge_file_parts "packages/apps/DepthWallpaperHelper/DepthWallpaperHelper.apk"
+

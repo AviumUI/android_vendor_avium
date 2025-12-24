@@ -49,6 +49,12 @@ GMS_CONFIG := $(GMS_MINI_CONFIG)
 endif # TARGET_GMS_TYPE
 endif # WITH_GMS
 
+# Circle to search
+ifeq ($(WITH_GMS), true)
+PRODUCT_COPY_FILES += \
+    vendor/avium/permissions/com.google.android.contextual_search.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/com.google.android.contextual_search.xml
+endif
+
 # Get non-opensource aspects
 ifeq ($(WITH_GMS), true)
 $(call inherit-product, $(GMS_CONFIG))

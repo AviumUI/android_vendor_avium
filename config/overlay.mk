@@ -18,3 +18,8 @@
 
 PRODUCT_PACKAGE_OVERLAYS += \
     vendor/avium/overlay/common
+
+ifeq ($(WITH_GMS), true)
+PRODUCT_PACKAGE_OVERLAYS += \
+    vendor/avium/overlay/gms
+endif

@@ -45,8 +45,6 @@ PRODUCT_PACKAGES += \
     PocketMode \
     DepthWallpaperHelper
 
-#DepthWallpaperHelper
-
 # TODO: Need GameSpace
 
 # Updater
@@ -64,3 +62,18 @@ PRODUCT_COPY_FILES += \
     vendor/avium/prebuilt/media/wallpaper/wallpaper:$(TARGET_COPY_OUT_SYSTEM_EXT)/media/wallpaper/wallpaper
 
 PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.depthwallpaper=0
+
+# ParanoidSense
+TARGET_FACE_UNLOCK_SUPPORTED ?= $(TARGET_SUPPORTS_64_BIT_APPS)
+
+ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
+PRODUCT_PACKAGES += \
+    ParanoidSense
+
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.face.sense_service=true
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
+endif
+

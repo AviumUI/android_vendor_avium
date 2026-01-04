@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# skip abi checks
+export SKIP_ABI_CHECKS=true
 
 TOP=$(gettop)
 function get_gms() {

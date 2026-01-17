@@ -55,7 +55,7 @@ else
 endif
 
 # AviumUI version properties
-PRODUCT_SYSTEM_PROPERTIES += \
+PRODUCT_PRODUCT_PROPERTIES += \
 	ro.avium.build.version=$(PLATFORM_VERSION) \
 	ro.avium.buildtype=$(AVIUM_BUILDTYPE) \
     ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \

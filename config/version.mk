@@ -15,7 +15,7 @@
 #
 
 # Avium Version
-AVIUM_VER := AviumUI-$(PLATFORM_VERSION)-$(LINEAGE_BUILD)
+AVIUM_VER := AviumUI-16.2-$(LINEAGE_BUILD)
 
 # Date format
 ifeq ($(AVIUM_VERSION_APPEND_TIME_OF_DAY),true)

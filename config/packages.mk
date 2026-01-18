@@ -40,11 +40,11 @@ PRODUCT_PACKAGES += \
     AviumLockscreenEdit \
     AviumSystemUIEX \
     BtHelper \
-    OmniJaws \
     Note \
     PocketMode \
     DepthWallpaperHelper
 
+# TODO: Need OmniJaws
 # TODO: Need GameSpace
 
 # Updater

@@ -65,7 +65,7 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.depthwallpaper=0
 
 # ParanoidSense
 TARGET_FACE_UNLOCK_SUPPORTED ?= $(TARGET_SUPPORTS_64_BIT_APPS)
-
+ifeq ($(TARGET_ARCH),arm64)
 ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
 PRODUCT_PACKAGES += \
     ParanoidSense
@@ -75,5 +75,6 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
+endif
 endif
 

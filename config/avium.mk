@@ -55,10 +55,6 @@ TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 # For letting apps think they are running on a locked device.
 AVIUM_FORCE_SET_FAKE_PROP ?= false
 
-# Blur Effect
-# Set to true to enable blur effect in system UI.
-TARGET_ENABLE_BLUR ?= false
-
 # Include configs
 $(call inherit-product, vendor/avium/config/packages.mk)
 $(call inherit-product, vendor/avium/config/overlay.mk)
@@ -66,7 +62,6 @@ $(call inherit-product, vendor/avium/config/version.mk)
 $(call inherit-product, vendor/avium/config/sepolicy.mk)
 $(call inherit-product, vendor/avium/config/gms.mk)
 $(call inherit-product, vendor/avium/config/soong_namespace.mk)
-$(call inherit-product, vendor/avium/config/prop.mk)
 
 # AviumUI init
 PRODUCT_COPY_FILES += \

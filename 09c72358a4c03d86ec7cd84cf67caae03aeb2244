@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d9c4f0f_b50b5e6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-01-19T05:57:18Z",
+      "side": 1,
+      "message": "有些设备还需要这个强制开启模糊",
+      "revId": "09c72358a4c03d86ec7cd84cf67caae03aeb2244",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    }
+  ]
+}

@@ -56,7 +56,7 @@ TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 AVIUM_FORCE_SET_FAKE_PROP ?= false
 
 # Blur Effect
-# Set to true to enable blur effect in system UI.
+# Set to true to force enable blur for SystemUI.
 TARGET_ENABLE_BLUR ?= false
 
 # Include configs

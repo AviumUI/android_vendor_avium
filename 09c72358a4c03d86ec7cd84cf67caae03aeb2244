@@ -16,6 +16,24 @@
       "message": "有些设备还需要这个强制开启模糊",
       "revId": "09c72358a4c03d86ec7cd84cf67caae03aeb2244",
       "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7542aa1c_f1ef23a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2026-01-19T05:58:49Z",
+      "side": 1,
+      "message": "😨这config不是默认开的？",
+      "parentUuid": "0d9c4f0f_b50b5e6f",
+      "revId": "09c72358a4c03d86ec7cd84cf67caae03aeb2244",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
     }
   ]
 }

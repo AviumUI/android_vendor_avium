@@ -36,38 +36,15 @@ using android::base::ReadFileToString;
 namespace avium {
 namespace utils {
 
-void StdOutLog(const std::string& status, const std::string& message) {
-    std::cout << status << ": " << message << std::endl;
-}
-
-void LogWithStdOut(const std::string& status, const std::string& message) {
-    if (message.empty()) {
-        return;
-    }
-    if (status.empty()) {
-        LOG(INFO) << "Log level is empty, default to info";
-        StdOutLog("I", "Log level is empty, default to info");
-        LOG(INFO) << message;
-        StdOutLog("I", message);
-    }else if (status == "E" || status == "ERROR") {
-        LOG(ERROR) << message;
-    } else if (status == "W" || status == "WARNING") {
-        LOG(WARNING) << message;
-    } else if (status == "I" || status == "INFO") {
-        LOG(INFO) << message;
-    } else if (status == "D" || status == "DEBUG") {
-        LOG(DEBUG) << message;
-    } else {
-        LOG(INFO) << "Unknown log level: " << status << ", defaulting to INFO";
-        LOG(INFO) << message;
-    }
-    StdOutLog(status, message);
-}
-
 inline std::string Trim(const std::string &s) {
     auto start = s.find_first_not_of(" \t");
     auto end = s.find_last_not_of(" \t");
     return (start == std::string::npos) ? "" : s.substr(start, end - start + 1);
+}
+
+bool IsCommentLine(const std::string& line) {
+    std::string t = Trim(line);
+    return (!t.empty() && t[0] == '#');
 }
 
 std::map<std::string, std::string> ParseConfigFile(const std::string& config_path) {
@@ -146,6 +123,52 @@ std::string GetConfigValue(const std::map<std::string, std::string>& config,
     }
     LOG(INFO) << "Config key \"" << key << "\" = \"" << it->second << "\"";
     return it->second;
+}
+
+bool ReplaceInputLine(const std::string& input, 
+                      const std::string& new_value,
+                      const std::string& path) {
+    std::string content;
+    if (!android::base::ReadFileToString(path, &content)) {
+        LOG(ERROR) << "Read file failed: " << path;
+        return false;
+    }
+
+    std::vector<std::string> lines;
+    std::string line;
+    std::istringstream ss(content);
+
+    bool changed = false;
+    while (std::getline(ss, line)) {
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
+
+        if (line.rfind(input, 0) == 0) {
+            line = input + "=" + new_value;
+            changed = true;
+        }
+        lines.push_back(line);
+    }
+    if (!changed){
+        return true;
+    }
+
+    std::string new_content;
+    for (size_t i = 0; i < lines.size(); ++i) {
+        new_content += lines[i];
+        if (i + 1 < lines.size()) {
+            new_content += "\n";
+        }
+    }
+
+    // Write back to file
+    if (!android::base::WriteStringToFile(new_content, path)) {
+        LOG(ERROR) << "Write file failed: " << path;
+        return false;
+    }
+
+    return true;
 }
 
 std::string SELinuxStatusFromBoot() {

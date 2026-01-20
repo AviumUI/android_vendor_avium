@@ -17,6 +17,8 @@
 #include "avium_utils.h"
 
 #include <sys/klog.h>
+#include <selinux/selinux.h>
+#include <fs_mgr.h>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -144,6 +146,28 @@ std::string GetConfigValue(const std::map<std::string, std::string>& config,
     }
     LOG(INFO) << "Config key \"" << key << "\" = \"" << it->second << "\"";
     return it->second;
+}
+
+std::string SELinuxStatusFromBoot() {
+    std::string value;
+    if (android::fs_mgr::GetKernelCmdline("androidboot.selinux", &value) && value == "permissive") {
+        return "permissive";
+    }
+    if (android::fs_mgr::GetBootconfig("androidboot.selinux", &value) && value == "permissive") {
+        return "permissive";
+    }
+    return "enforcing";
+}
+
+std::string GetSELinuxStatusFromApi(){
+    int status = security_getenforce();
+    if (status == 1) {
+        return "enforcing";
+    } else if (status == 0) {
+        return "permissive";
+    } else {
+        return "disabled_or_error";
+    }
 }
 
 std::string GetKmsg() {

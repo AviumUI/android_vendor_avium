@@ -38,6 +38,12 @@ std::string GetConfigValue(const std::map<std::string, std::string>& config,
                            const std::string& key,
                            const std::string& default_value);
 
+// get SELinux status from boot parameters
+std::string SELinuxStatusFromBoot();
+
+// get SELinux status using SELinux API
+std::string GetSELinuxStatusFromApi();
+
 // get kernel log as a string
 std::string GetKmsg();
 

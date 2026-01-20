@@ -8,5 +8,7 @@ cc_library_shared {
         "libbase",
         "liblog",
         "liblogwrap",
+        "libselinux",
+        "libfs_mgr",
     ],
 }

@@ -62,4 +62,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.avium.gms_status=$(WITH_GMS) \
 	ro.avium.maintainer=$(AVIUM_MAINTAINER) \
 	ro.avium.is_official=$(AVIUM_IS_OFFICIAL) \
-    ro.avium.version=$(AVIUM_VER)
+    ro.avium.version=$(AVIUM_VER) \
+    ro.avium.soc.model=$(AVIUM_SETTINGS_SOC_MODEL_NAME) \
+    ro.avium.device.codename=$(AVIUM_SETTINGS_DEVICE_CODENAME)

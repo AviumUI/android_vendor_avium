@@ -19,10 +19,6 @@ ifeq ($(TARGET_ENABLE_BLUR), true)
 PRODUCT_PRODUCT_PROPERTIES += ro.surface_flinger.supports_background_blur=1
 endif # TARGET_ENABLE_BLUR
 
-# Set displayed model name and soc name if maintainer asked
-ifdef AVIUM_SETTINGS_SOC_MODEL_NAME
-PRODUCT_PRODUCT_PROPERTIES += ro.avium.soc.model=$(AVIUM_SETTINGS_SOC_MODEL_NAME)
-endif
-ifdef AVIUM_SETTINGS_DEVICE_CODENAME
-PRODUCT_PRODUCT_PROPERTIES += ro.avium.device.codename=$(AVIUM_SETTINGS_DEVICE_CODENAME)
-endif
+PRODUCT_BUILD_PROP_OVERRIDES += \
+   AviumSocName="$(AVIUM_SETTINGS_SOC_MODEL_NAME)" \
+   AviumDeviceName="$(AVIUM_SETTINGS_DEVICE_CODENAME)"

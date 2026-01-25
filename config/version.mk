@@ -57,9 +57,9 @@ endif
 # AviumUI version properties
 PRODUCT_PRODUCT_PROPERTIES += \
 	ro.avium.build.version=$(PLATFORM_VERSION) \
-	ro.avium.buildtype=$(AVIUM_BUILDTYPE) \
-    ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \
-    ro.avium.gms_status=$(WITH_GMS) \
+	ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \
+	ro.avium.gms_status=$(WITH_GMS) \
 	ro.avium.maintainer=$(AVIUM_MAINTAINER) \
 	ro.avium.is_official=$(AVIUM_IS_OFFICIAL) \
-    ro.avium.version=$(AVIUM_VER)
+	ro.avium.version=$(AVIUM_VER)
+	

@@ -17,11 +17,6 @@
 # AviumUI configuration file
 
 # Build
-# AVIUM_BUILDTYPE is a string that represents the build type.
-# This flag is used to distinguish build types.
-# It can be set to "Release" or "Test".
-# Default is "Test".
-AVIUM_BUILDTYPE ?= Test
 # AVIUM_IS_OFFICIAL is a boolean flag to indicate 
 # whether the build is official or unofficial.
 AVIUM_IS_OFFICIAL ?= false

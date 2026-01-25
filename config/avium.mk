@@ -59,6 +59,12 @@ AVIUM_FORCE_SET_FAKE_PROP ?= false
 # Set to true to force enable blur for SystemUI.
 TARGET_ENABLE_BLUR ?= false
 
+# Settings
+# Soc model name
+AVIUM_SETTINGS_SOC_MODEL_NAME ?= Unknown
+# Device code name
+AVIUM_SETTINGS_DEVICE_CODENAME ?= Unknown
+
 # Include configs
 $(call inherit-product, vendor/avium/config/packages.mk)
 $(call inherit-product, vendor/avium/config/overlay.mk)

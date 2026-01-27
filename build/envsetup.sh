@@ -1,5 +1,5 @@
 # 
-# Copyright (C) 2025 The AviumUI Project
+# Copyright (C) 2025-2026 The AviumUI Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,73 +15,102 @@
 #
 
 TOP=$(gettop)
+
+# Colors
+local RED="\033[0;31m"
+    local GREEN="\033[0;32m"
+    local YELLOW="\033[0;33m"
+    local BLUE="\033[0;34m"
+    local RESET="\033[0m"
+
 function get_gms() {
-
-    # Default URL if user didn't set GMS_URL
-    if [ -z "$GMS_URL" ]; then
-        GMS_URL="https://codeberg.org/AviumUI/vendor_gms"
-    fi
-
-    # Default branch if user didn't set GMS_BRANCH
-    if [ -z "$GMS_BRANCH" ]; then
-        GMS_BRANCH="avium-16"
-    fi
-
-    local TARGET_BRANCH="$GMS_BRANCH"
-
-    # Ensure TOP exists
-    if ! [ -n "$TOP" ]; then
-        echo "Couldn't locate the top of the tree. Try setting TOP."
+    if [ -z "$TOP" ]; then
+        echo "Couldn't locate the top of the tree.  Try setting TOP."
         return 1
     fi
 
-    echo "Checking GMS repository..."
-    echo "URL: $GMS_URL"
-    echo "Branch to check: $TARGET_BRANCH"
+    local SRC_XML="$TOP/vendor/avium/manifest_snippets/pixel.xml"
+    local DST_DIR="$TOP/.repo/local_manifests"
+    local DST_XML="$DST_DIR/pixel.xml"
+
+    if [ ! -f "$SRC_XML" ]; then
+        echo -e "${RED}error:${RESET} source manifest not found:"
+        echo "  $SRC_XML"
+        return 1
+    fi
+
+    mkdir -p "$DST_DIR"
+
+    if [ -f "$DST_XML" ]; then
+        if diff -q "$SRC_XML" "$DST_XML" >/dev/null; then
+            echo -e "${GREEN}pixel.xml already up to date.${RESET}"
+        else
+            echo -e "${YELLOW}Local manifest differs from source:${RESET}"
+            echo "  $DST_XML"
+            echo
+
+            if [ -t 0 ]; then
+                echo -ne "${YELLOW}Overwrite with new pixel.xml? [y/N] ${RESET}"
+                IFS= read -r answer
+            else
+                answer="n"
+            fi
+
+            case "$answer" in
+                y|Y)
+                    cp "$SRC_XML" "$DST_XML"
+                    echo -e "${GREEN}pixel.xml updated.${RESET}"
+                    ;;
+                *)
+                    echo -e "${BLUE}Keeping existing pixel.xml.${RESET}"
+                    ;;
+            esac
+        fi
+    else
+        cp "$SRC_XML" "$DST_XML"
+        echo -e "${GREEN}pixel.xml installed into local_manifests.${RESET}"
+    fi
+
     echo
 
-    echo -n "Checking repository / branch availability... "
-
-    if ! output=$(git ls-remote --heads "$GMS_URL" "$TARGET_BRANCH" 2>/dev/null); then
-        echo "FAILED"
-        echo "Error: Unable to access $GMS_URL"
-        echo
-        echo "Please check your network connection and URL."
-        echo "You can set GMS_URL to use a different mirror."
-        echo "  export GMS_URL=https://codeberg.org/AviumUI/vendor_gms"
-        echo "If you are behind a proxy, please check your proxy settings."
-        echo
-        echo "Skipping GMS download."
-        echo
-        echo "You can run 'avium get_gms' again after fixing the issue."
-        return 1
+    if [ -t 0 ]; then
+        echo -ne "${YELLOW}Sync GMS repositories now? [y/N] ${RESET}"
+        IFS= read -r sync_answer
+    else
+        sync_answer="n"
     fi
 
-    if [ -z "$output" ]; then
-        echo "FAILED"
-        echo "Error: Branch '$TARGET_BRANCH' does NOT exist on:"
-        echo "  $GMS_URL"
-        echo
-        echo "To override the branch, set:"
-        echo "  export GMS_BRANCH=<branch>"
-        echo
-        echo "Skipping GMS download."
-        echo
-        echo "You can run 'avium get_gms' again after fixing the issue."
-        return 1
-    fi
+    case "$sync_answer" in
+        y|Y)
+            echo
+            echo -e "${BLUE}Executing repo sync command...${RESET}"
+            echo
 
-    echo "OK"
+            repo sync \
+                vendor/pixel/clocks \
+                vendor/pixel/sounds \
+                vendor/pixel/themepicker \
+                vendor/pixel/gms \
+                vendor/pixel/gsans \
+                -c -j5
+
+            local sync_ret=$?
+
+            echo
+            if [ $sync_ret -eq 0 ]; then
+                echo -e "${GREEN}repo sync finished.${RESET}"
+            else
+                echo -e "${RED}repo sync failed (exit code $sync_ret).${RESET}"
+                return $sync_ret
+            fi
+            ;;
+        *)
+            echo -e "${BLUE}repo sync skipped.${RESET}"
+            echo -e "${BLUE}You can run 'avium get_gms' to download GMS.${RESET}"
+            ;;
+    esac
+
     echo
-
-    git_sync_gms
-
-    echo "GMS files downloaded. You can run 'avium remove_gms' to delete them."
-    echo "To update, 'cd vendor/gms', then run 'git pull'"
-}
-
-function git_sync_gms() {
-	git clone --depth=1 $GMS_URL $TOP/vendor/gms
 }
 
 function remove_gms() {
@@ -93,30 +122,37 @@ function remove_gms() {
     # Due to some historical reasons, some builders still remain old
     # method to download the gms.
     # TODO: Remove this when capable.
-    rm -rf "$TOP/.repo/local_manifests/avium_gms.xml"
+    rm -rf "$TOP/.repo/local_manifests/pixel.xml"
     rm -rf "$TOP/vendor/gms"
-    rm -rf "$TOP/.repo/project-objects/proprietary_vendor_gms.git"
-    rm -rf "$TOP/.repo/projects/vendor/gms.git"
-    rm -rf "$TOP/.repo/project-objects/proprietary_vendor_google_gms.git"
-    rm -rf "$TOP/.repo/projects/vendor/google/gms.git"
-    echo "GMS files removed. You can run 'get_gms' to download them again."
+    echo "GMS files removed. You can run 'avium get_gms' to download them again."
 }
 
-function merge_file_parts() {
-    local target_file="$1"
+merge_file_parts() {
+    target_file="$1"
 
-    if [[ -z "$target_file" ]]; then
-        echo "[AviumUI envsetup] ERROR: merge_file_parts() requires a target file path." >&2
+    if [ -z "$target_file" ]; then
+        echo -e "merge_file_parts(): ${RED}ERROR${RESET}: merge_file_parts() requires a target file path." >&2
         return 1
     fi
 
-    [[ -f "$target_file" ]] && return
+    [ -f "$target_file" ] && return 0
 
-    local part_prefix="$target_file"
+    part_prefix="$target_file"
+    found_part=0
 
-    local parts=($(ls ${part_prefix}.*.part 2>/dev/null | sort -V))
+    for part in $(ls "${part_prefix}".*.part 2>/dev/null); do
+        if [ "$found_part" -eq 0 ]; then
+            : > "$target_file"
+            found_part=1
+        fi
+        cat "$part" >> "$target_file"
+    done
 
-    cat "${parts[@]}" > "$target_file"
+    [ "$found_part" -eq 0 ] && return 0
+
+    if [ -s "$target_file" ]; then
+        echo -e "merge_file_parts(): ${GREEN}Merged: $target_file${RESET}"
+    fi
 }
 
 function avium_build() {
@@ -209,4 +245,12 @@ function avium() {
 }
 
 merge_file_parts "packages/apps/DepthWallpaperHelper/DepthWallpaperHelper.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/Maps/Maps.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/Photos/Photos.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/PrebuiltGmail/PrebuiltGmail.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/DevicePersonalizationPrebuiltPixel2024-playstore_aiai_20250306.00_RC10/DevicePersonalizationPrebuiltPixel2024-playstore_aiai_20250306.00_RC10.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/PrebuiltBugle/PrebuiltBugle.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/PrebuiltGmsCoreVic/PrebuiltGmsCoreVic.apk"
+merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/Velvet/Velvet.apk"
+
 

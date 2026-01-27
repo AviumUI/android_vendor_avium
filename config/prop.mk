@@ -15,9 +15,9 @@
 #
 
 # Enable blur if maintainer asked
-ifeq ($(TARGET_ENABLE_BLUR), true)
+ifeq ($(TARGET_FORCE_ENABLE_BLUR), true)
 PRODUCT_PRODUCT_PROPERTIES += ro.surface_flinger.supports_background_blur=1
-endif # TARGET_ENABLE_BLUR
+endif # TARGET_FORCE_ENABLE_BLUR
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
    AviumSocName="$(AVIUM_SETTINGS_SOC_MODEL_NAME)" \

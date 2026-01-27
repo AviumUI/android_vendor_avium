@@ -1,5 +1,5 @@
 # 
-# Copyright (C) 2025 The AviumUI Project
+# Copyright (C) 2025-2026 The AviumUI Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,48 +14,31 @@
 # limitations under the License.
 #
 
-GMS_DIR := vendor/gms
+# AviumUI GMS Configuration
 
-# Set as no gms by default
-WITH_GMS ?= false
-
-# Override AOSP IME if using gms
 ifeq ($(WITH_GMS),true)
-TARGET_INCLUDE_GOOGLEIME := true
-TARGET_GOOGLEIME_OVERRIDE_IME := true
-endif
+# Override gsans if using gms
+TARGET_USES_GSANS := true
 
-# Check if gms exists
-ifeq ($(wildcard $(GMS_DIR)),)
-$(warning Missing GMS in $(GMS_DIR))
-$(warning You may want to run 'avium get_gms' to download gms source.)
-endif
-
-# Set gms type
-GMS_MINI_CONFIG := $(GMS_DIR)/gms_mini.mk
-GMS_PICO_CONFIG := $(GMS_DIR)/gms_pico.mk
-GMS_FULL_CONFIG := $(GMS_DIR)/gms_full.mk
-
-ifeq ($(WITH_GMS), true)
-ifeq ($(TARGET_GMS_TYPE), FULL)
-GMS_CONFIG := $(GMS_FULL_CONFIG)
-else ifeq ($(TARGET_GMS_TYPE), PICO)
-GMS_CONFIG := $(GMS_PICO_CONFIG)
-else ifeq ($(TARGET_GMS_TYPE), MINI)
-GMS_CONFIG := $(GMS_MINI_CONFIG)
-else
-$(warning TARGET_GMS_TYPE is not set correctly, defaulting to MINI)
-GMS_CONFIG := $(GMS_MINI_CONFIG)
-endif # TARGET_GMS_TYPE
-endif # WITH_GMS
-
-# Circle to search
-ifeq ($(WITH_GMS), true)
-PRODUCT_COPY_FILES += \
-    vendor/avium/permissions/com.google.android.contextual_search.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/com.google.android.contextual_search.xml
+# Disable Google IME in avium prebuilts
+TARGET_INCLUDE_GOOGLEIME := false
+TARGET_GOOGLEIME_OVERRIDE_IME := false
 endif
 
 # Get non-opensource aspects
-ifeq ($(WITH_GMS), true)
-$(call inherit-product, $(GMS_CONFIG))
+# Pixel Clocks
+$(call inherit-product, vendor/pixel/clocks/products/clocks.mk)
+
+# Pixel GMS
+$(call inherit-product, vendor/pixel/gms/products/gms.mk)
+
+# Pixel GSans
+ifeq ($(TARGET_USES_GSANS),true)
+$(call inherit-product, vendor/pixel/gsans/products/gsans.mk)
 endif
+
+# Pixel ThemePicker
+$(call inherit-product, vendor/pixel/sounds/products/sounds.mk)
+
+# Pixel ThemePicker
+$(call inherit-product, vendor/pixel/themepicker/products/themepicker.mk)

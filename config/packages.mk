@@ -1,5 +1,5 @@
 # 
-# Copyright (C) 2025 The AviumUI Project
+# Copyright (C) 2025-2026 The AviumUI Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +14,20 @@
 # limitations under the License.
 #
 
-# This is AviumUI extra packages configuration file.
+# AviumUI extra packages configuration
 
 # LatinIMEGoogle
-ifeq ($(TARGET_INCLUDE_GOOGLEIME),true)
-    ifeq ($(TARGET_GOOGLEIME_OVERRIDE_IME),true)
+ifneq ($(WITH_GMS), true)
+ifeq ($(TARGET_INCLUDE_GOOGLEIME), true)
+    ifeq ($(TARGET_GOOGLEIME_OVERRIDE_IME), true)
         PRODUCT_PACKAGES += \
             LatinIMEGooglePrebuilt_Override
     else
         PRODUCT_PACKAGES += \
-            LatinIMEGooglePrebuilt
+            LatinIMEGooglePrebuiltAvium
     endif
-endif
+endif # TARGET_INCLUDE_GOOGLEIME
+endif # WITH_GMS
 
 # AviumUI Apps
 PRODUCT_PACKAGES += \

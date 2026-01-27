@@ -23,25 +23,25 @@ AVIUM_IS_OFFICIAL ?= false
 # AVIUM_VERSION_APPEND_TIME_OF_DAY is a boolean flag to indicate
 # whether to append time of day to the build date.
 AVIUM_VERSION_APPEND_TIME_OF_DAY ?= false
+# Maintainer
+# AVIUM_MAINTAINER is a string that represents the maintainer of the build.
+AVIUM_MAINTAINER ?= Unknown
+
+# Settings
+# Soc model name
+AVIUM_SETTINGS_SOC_MODEL_NAME ?= Unknown
+# Device code name
+AVIUM_SETTINGS_DEVICE_CODENAME ?= Unknown
 
 # GMS
 # WITH_GMS is a boolean flag to indicate 
 # whether to include Google Mobile Services (GMS) in the build.
 WITH_GMS ?= false
-# TARGET_GMS_TYPE has 3 options: FULL, MINI and PICO.
-# FULL: The most complete GMS components
-# MINI: The part of necessary GMS components
-# PICO: The minimum GMS core components
-# If WITH_GMS is true and TARGET_GMS_TYPE is not set, it will default to MINI
-TARGET_GMS_TYPE ?= MINI
-
-# Maintainer
-# AVIUM_MAINTAINER is a string that represents the maintainer of the build.
-AVIUM_MAINTAINER ?= Unknown
-
+# Google Sans
+# Enable this to set default fonts to Google Sans.
+TARGET_USES_GSANS := false
 # LatinIMEGooglePrebuilt
-# If WITH_GMS is true, Google LatinIME will be included 
-# and forced override the default IME.
+# Only works on vanilla builds.
 TARGET_INCLUDE_GOOGLEIME ?= false
 TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 
@@ -51,21 +51,16 @@ TARGET_GOOGLEIME_OVERRIDE_IME ?= false
 AVIUM_FORCE_SET_FAKE_PROP ?= false
 
 # Blur Effect
-# Set to true to force enable blur for SystemUI.
-TARGET_ENABLE_BLUR ?= false
-
-# Settings
-# Soc model name
-AVIUM_SETTINGS_SOC_MODEL_NAME ?= Unknown
-# Device code name
-AVIUM_SETTINGS_DEVICE_CODENAME ?= Unknown
+# The blur usually enabled on Android 16 QPR2.
+# If the blur not enabled, set to true to force enable blur for SystemUI.
+TARGET_FORCE_ENABLE_BLUR ?= false
 
 # Include configs
+$(call inherit-product, vendor/avium/config/gms.mk)
 $(call inherit-product, vendor/avium/config/packages.mk)
 $(call inherit-product, vendor/avium/config/overlay.mk)
 $(call inherit-product, vendor/avium/config/version.mk)
 $(call inherit-product, vendor/avium/config/sepolicy.mk)
-$(call inherit-product, vendor/avium/config/gms.mk)
 $(call inherit-product, vendor/avium/config/soong_namespace.mk)
 $(call inherit-product, vendor/avium/config/prop.mk)
 

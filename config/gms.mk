@@ -1,5 +1,5 @@
 # 
-# Copyright (C) 2025 The AviumUI Project
+# Copyright (C) 2025-2026 The AviumUI Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,48 +14,56 @@
 # limitations under the License.
 #
 
-GMS_DIR := vendor/gms
+# AviumUI GMS Configuration
 
-# Set as no gms by default
-WITH_GMS ?= false
-
-# Override AOSP IME if using gms
 ifeq ($(WITH_GMS),true)
-TARGET_INCLUDE_GOOGLEIME := true
-TARGET_GOOGLEIME_OVERRIDE_IME := true
-endif
+# Override gsans if using gms
+TARGET_USES_GSANS := true
 
-# Check if gms exists
-ifeq ($(wildcard $(GMS_DIR)),)
-$(warning Missing GMS in $(GMS_DIR))
-$(warning You may want to run 'avium get_gms' to download gms source.)
-endif
-
-# Set gms type
-GMS_MINI_CONFIG := $(GMS_DIR)/gms_mini.mk
-GMS_PICO_CONFIG := $(GMS_DIR)/gms_pico.mk
-GMS_FULL_CONFIG := $(GMS_DIR)/gms_full.mk
-
-ifeq ($(WITH_GMS), true)
-ifeq ($(TARGET_GMS_TYPE), FULL)
-GMS_CONFIG := $(GMS_FULL_CONFIG)
-else ifeq ($(TARGET_GMS_TYPE), PICO)
-GMS_CONFIG := $(GMS_PICO_CONFIG)
-else ifeq ($(TARGET_GMS_TYPE), MINI)
-GMS_CONFIG := $(GMS_MINI_CONFIG)
-else
-$(warning TARGET_GMS_TYPE is not set correctly, defaulting to MINI)
-GMS_CONFIG := $(GMS_MINI_CONFIG)
-endif # TARGET_GMS_TYPE
+# Disable Google IME in avium prebuilts
+TARGET_INCLUDE_GOOGLEIME := false
+TARGET_GOOGLEIME_OVERRIDE_IME := false
 endif # WITH_GMS
 
-# Circle to search
+# Check if repository exists
+MISSING_DIRS :=
+ifeq ($(TARGET_USES_GSANS), true)
+ifeq ($(wildcard vendor/pixel/gsans),)
+MISSING_DIRS += vendor/pixel/gsans
+endif
+endif # TARGET_USES_GSANS
 ifeq ($(WITH_GMS), true)
-PRODUCT_COPY_FILES += \
-    vendor/avium/permissions/com.google.android.contextual_search.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/com.google.android.contextual_search.xml
+ifeq ($(wildcard vendor/pixel/gms),)
+MISSING_DIRS += vendor/pixel/gms
+endif
+ifeq ($(wildcard vendor/pixel/clocks),)
+MISSING_DIRS += vendor/pixel/clocks
+endif
+ifeq ($(wildcard vendor/pixel/sounds),)
+MISSING_DIRS += vendor/pixel/sounds
+endif
+endif # WITH_GMS
+ifneq ($(strip $(MISSING_DIRS)),)
+$(warning Missing required directories: $(MISSING_DIRS))
+$(warning You may want to run 'avium get_gms' command to sync them.)
+$(error Aborting due to missing required repositories)
 endif
 
 # Get non-opensource aspects
+ifeq ($(strip $(MISSING_DIRS)),)
 ifeq ($(WITH_GMS), true)
-$(call inherit-product, $(GMS_CONFIG))
-endif
+# Pixel Clocks
+$(call inherit-product, vendor/pixel/clocks/products/clocks.mk)
+
+# Pixel GMS
+$(call inherit-product, vendor/pixel/gms/products/gms.mk)
+
+# Pixel Sounds
+$(call inherit-product, vendor/pixel/sounds/products/sounds.mk)
+endif # WITH_GMS
+
+# Pixel GSans
+ifeq ($(TARGET_USES_GSANS), true)
+$(call inherit-product, vendor/pixel/gsans/products/gsans.mk)
+endif # TARGET_USES_GSANS
+endif # MISSING_DIRS

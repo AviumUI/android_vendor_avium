@@ -1,1 +1,3 @@
 add_service(system_server, resolution_ext_service)
+# Freeform
+add_service(system_server, freeform_service);

@@ -42,7 +42,8 @@ PRODUCT_PACKAGES += \
     BtHelper \
     Note \
     PocketMode \
-    DepthWallpaperHelper
+    DepthWallpaperHelper \
+    AviumFreeWindow
 
 # TODO: Need OmniJaws
 # TODO: Need GameSpace

@@ -1,1 +1,4 @@
 resolution_ext    u:object_r:resolution_ext_service:s0
+
+# Freeform
+freeform_overlay    u:object_r:freeform_service:s0

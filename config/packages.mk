@@ -57,6 +57,10 @@ PRODUCT_COPY_FILES += \
      vendor/avium/prebuilt/common/etc/init/init.avium-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.avium-updater.rc
 endif
 
+# App Clone Support
+PRODUCT_COPY_FILES += \
+    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-avium-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-avium-product.xml
+
 # DepthWallpaperHelper
 PRODUCT_COPY_FILES += \
     vendor/avium/prebuilt/media/wallpaper/mask:$(TARGET_COPY_OUT_SYSTEM_EXT)/media/wallpaper/mask \

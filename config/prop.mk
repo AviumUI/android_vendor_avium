@@ -27,3 +27,5 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 AVIUM_HIDE_SYSAPP_NOTIFS := org.avium.systemuiex,com.sunshine.freeform,org.avium.systemuitools,org.exthm.exthmuseful
 PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.hide_sysapp_notifs=$(AVIUM_HIDE_SYSAPP_NOTIFS)
    
+# Popup View
+PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.popup_view=bubble

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "624b598b_1dcd0588",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2026-01-30T17:43:46Z",
+      "side": 1,
+      "message": "Verified on gms version by me and vanilla version by @finish21190@gmail.com\nBut I think we still need others to test this",
+      "revId": "61d1b16f42dcec25de70d88dbadd7dc7f1236d66",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    }
+  ]
+}

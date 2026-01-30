@@ -16,6 +16,23 @@
       "message": "Please verify this change for both vanilla \u0026 gms build!",
       "revId": "94b8ada53a5f256493cf5ebcab9786c4b870ca17",
       "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b467f8e_4a6bb52d",
+        "filename": "config/gms.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-01-30T17:12:40Z",
+      "side": 1,
+      "message": "@moegluwu0@gmail.com \n1.Please use -include or if-exist-inherit-product\n2.If flag is enabled but source not ready, please add a warn or error\n3.DO NOT DEFAULT INCLUDE ALL GMS MAKEFILES. If you want please add it in manifest",
+      "revId": "94b8ada53a5f256493cf5ebcab9786c4b870ca17",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
     }
   ]
 }

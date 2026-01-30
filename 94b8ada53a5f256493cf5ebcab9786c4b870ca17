@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9a301f9_4c75a71c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2026-01-30T16:56:33Z",
+      "side": 1,
+      "message": "Please verify this change for both vanilla \u0026 gms build!",
+      "revId": "94b8ada53a5f256493cf5ebcab9786c4b870ca17",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    }
+  ]
+}

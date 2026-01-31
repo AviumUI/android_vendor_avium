@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "617c272a_a6793ace",
+        "filename": "overlay/network/captive/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2026-01-31T09:42:48Z",
+      "side": 1,
+      "message": "Move Copyright header after line 17",
+      "revId": "5c9525121783bb182d9c4af380ba7ed82c3ab535",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02437843_df35ec3f",
+        "filename": "overlay/network/ntp/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2026-01-31T09:42:48Z",
+      "side": 1,
+      "message": "this also",
+      "revId": "5c9525121783bb182d9c4af380ba7ed82c3ab535",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    }
+  ]
+}

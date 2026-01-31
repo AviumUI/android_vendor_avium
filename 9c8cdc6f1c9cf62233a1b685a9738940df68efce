@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33f983bf_10a95759",
+        "filename": "overlay/network/ntp/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2026-01-31T09:42:48Z",
+      "side": 0,
+      "message": "this also",
+      "revId": "9c8cdc6f1c9cf62233a1b685a9738940df68efce",
+      "serverId": "8582d5b1-6499-4a2f-9eb8-9aae0e0bb54f"
+    }
+  ]
+}

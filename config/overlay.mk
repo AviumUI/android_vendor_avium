@@ -16,5 +16,9 @@
 
 # AviumUI Overlay Configuration
 
+PRODUCT_PACKAGES += \
+    AviumNTPServerOverlay \
+    AviumCaptiveServerOverlay
+
 PRODUCT_PACKAGE_OVERLAYS += \
     vendor/avium/overlay/common

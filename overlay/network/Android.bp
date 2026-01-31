@@ -1,0 +1,16 @@
+runtime_resource_overlay {
+    name: "AviumCaptiveServerOverlay",
+    sdk_version: "current",
+    resource_dirs: ["captive/res"],
+    manifest: "captive/AndroidManifest.xml",
+    product_specific: true,
+    certificate: "platform",
+}
+
+runtime_resource_overlay {
+    name: "AviumNTPServerOverlay",
+    sdk_version: "current",
+    resource_dirs: ["ntp/res"],
+    manifest: "ntp/AndroidManifest.xml",
+    product_specific: true,
+}

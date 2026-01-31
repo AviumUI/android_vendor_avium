@@ -98,6 +98,8 @@ function get_gms() {
             echo
             if [ $sync_ret -eq 0 ]; then
                 echo -e "${GREEN}repo sync finished.${RESET}"
+		echo -e "${BLUE}Merging file parts...${RESET}"
+		merge_files
             else
                 echo -e "${RED}repo sync failed (exit code $sync_ret).${RESET}"
                 return $sync_ret
@@ -241,6 +243,7 @@ function avium() {
     esac
 }
 
+function merge_files() {
 merge_file_parts "packages/apps/DepthWallpaperHelper/DepthWallpaperHelper.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/Maps/Maps.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/Photos/Photos.apk"
@@ -249,5 +252,6 @@ merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/DevicePer
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/PrebuiltBugle/PrebuiltBugle.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/PrebuiltGmsCoreVic/PrebuiltGmsCoreVic.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/priv-app/Velvet/Velvet.apk"
+}
 
-
+merge_files

@@ -24,7 +24,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
    AviumDeviceName="$(AVIUM_SETTINGS_DEVICE_CODENAME)"
 
 # Hide SystemApp Notifications
-AVIUM_HIDE_SYSAPP_NOTIFS := org.avium.systemuiex,com.sunshine.freeform,org.avium.systemuitools,org.exthm.exthmuseful
+AVIUM_HIDE_SYSAPP_NOTIFS := org.avium.systemuiex,com.sunshine.freeform,org.exthm.exthmuseful,org.avium.alivenotifscore
 PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.hide_sysapp_notifs=$(AVIUM_HIDE_SYSAPP_NOTIFS)
    
 # Popup View

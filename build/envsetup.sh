@@ -17,11 +17,11 @@
 TOP=$(gettop)
 
 # Colors
-local RED="\033[0;31m"
-    local GREEN="\033[0;32m"
-    local YELLOW="\033[0;33m"
-    local BLUE="\033[0;34m"
-    local RESET="\033[0m"
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[0;34m"
+RESET="\033[0m"
 
 function get_gms() {
     if [ -z "$TOP" ]; then

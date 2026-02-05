@@ -34,7 +34,7 @@ PRODUCT_PACKAGES += \
     FeatureSettings \
     AviumSystemUITools \
     MoonOCR \
-    ExthmUseful \
+    AviumUseful \
     MoonWidget \
     CatShareForAvium \
     Via \

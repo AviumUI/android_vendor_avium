@@ -18,7 +18,8 @@
 
 PRODUCT_PACKAGES += \
     AviumNTPServerOverlay \
-    AviumCaptiveServerOverlay
+    AviumCaptiveServerOverlay \
+    AviumSettingsOverlay
 
 PRODUCT_PACKAGE_OVERLAYS += \
     vendor/avium/overlay/common

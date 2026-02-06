@@ -133,7 +133,16 @@ bool ReplaceInputLine(const std::string& input,
         LOG(ERROR) << "Read file failed: " << path;
         return false;
     }
-
+    if (content.empty()) {
+        LOG(WARNING) << "File is empty: " << path;
+        LOG(INFO) << "Adding line: " << input << "=" << new_value;
+        content = input + "=" + new_value + "\n";
+        if (!android::base::WriteStringToFile(content, path)) {
+            LOG(ERROR) << "Write file failed: " << path;
+            return false;
+        }
+        return true;
+    }
     std::vector<std::string> lines;
     std::string line;
     std::istringstream ss(content);

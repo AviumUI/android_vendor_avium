@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui"
+  name: "glanceable_hub_enabled_by_default"
+  state: ENABLED
+  permission: READ_ONLY
+}

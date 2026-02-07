@@ -33,7 +33,6 @@ endif # WITH_GMS
 PRODUCT_PACKAGES += \
     FeatureSettings \
     AviumSystemUITools \
-    MoonOCR \
     AviumUseful \
     MoonWidget \
     CatShareForAvium \
@@ -48,6 +47,12 @@ PRODUCT_PACKAGES += \
     DepthWallpaperHelper \
     AviumFreeWindow \
     AviumLyricBarCore
+
+# Disable MoonOCR on GMS builds as they have conflicts
+ifneq ($(WITH_GMS), true)
+PRODUCT_PACKAGES += \
+    MoonOCR
+endif # WITH_GMS
 
 # TODO: Need GameSpace
 

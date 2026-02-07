@@ -47,7 +47,8 @@ PRODUCT_PACKAGES += \
     PocketMode \
     DepthWallpaperHelper \
     AviumFreeWindow \
-    AviumLyricBarCore
+    AviumLyricBarCore \
+    ColumbusService
 
 # TODO: Need GameSpace
 

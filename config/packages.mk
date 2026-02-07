@@ -46,7 +46,8 @@ PRODUCT_PACKAGES += \
     PocketMode \
     DepthWallpaperHelper \
     AviumFreeWindow \
-    AviumLyricBarCore
+    AviumLyricBarCore \
+    ColumbusService
 
 # Disable MoonOCR on GMS builds as they have conflicts
 ifneq ($(WITH_GMS), true)

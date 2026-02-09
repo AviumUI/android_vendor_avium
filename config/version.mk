@@ -15,7 +15,11 @@
 #
 
 # Avium Version
-AVIUM_VER := AviumUI-16.2-$(LINEAGE_BUILD)
+AVIUM_MAJOR_VERSION := 16
+AVIUM_MINOR_VERSION := 2
+AVIUM_PATCH_VERSION := 0
+
+AVIUM_VER := AviumUI-$(AVIUM_MAJOR_VERSION).$(AVIUM_MINOR_VERSION).$(AVIUM_PATCH_VERSION)-$(LINEAGE_BUILD)
 
 # Date format
 ifeq ($(AVIUM_VERSION_APPEND_TIME_OF_DAY),true)
@@ -25,7 +29,7 @@ else
 endif
 
 # Display version
-AVIUM_DISPLAY_VERSION := AviumUI-$(LINEAGE_BUILD)-$(AVIUM_BUILD_DATE)
+AVIUM_DISPLAY_VERSION := $(AVIUM_VER)-$(AVIUM_BUILD_DATE)
 
 # Full version
 # Because some devices have 'mtdoops.fingerprint' in cmdline.
@@ -40,9 +44,9 @@ endif
 
 # Package name
 ifeq ($(AVIUM_IS_OFFICIAL),true)
-    AVIUM_PACKAGE_NAME := AviumUI-$(PLATFORM_VERSION)-$(LINEAGE_BUILD)-$(AVIUM_BUILD_DATE)-Official
+    AVIUM_PACKAGE_NAME := $(AVIUM_DISPLAY_VERSION)-Official
 else
-    AVIUM_PACKAGE_NAME := AviumUI-$(PLATFORM_VERSION)-$(LINEAGE_BUILD)-$(AVIUM_BUILD_DATE)-Unofficial
+    AVIUM_PACKAGE_NAME := $(AVIUM_DISPLAY_VERSION)-Unofficial
 endif
 
 # GMS Status
@@ -56,7 +60,7 @@ endif
 
 # AviumUI version properties
 PRODUCT_PRODUCT_PROPERTIES += \
-	ro.avium.build.version=$(PLATFORM_VERSION) \
+	ro.avium.build.version=$(AVIUM_MAJOR_VERSION).$(AVIUM_MINOR_VERSION).$(AVIUM_PATCH_VERSION) \
 	ro.avium.display.version=$(AVIUM_DISPLAY_VERSION) \
 	ro.avium.gms_status=$(WITH_GMS) \
 	ro.avium.maintainer=$(AVIUM_MAINTAINER) \

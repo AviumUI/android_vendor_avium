@@ -22,12 +22,6 @@
     </install-in-user-type>
 
     <!-- System packages that should not be pre-installed on the CLONE profile. -->
-    <!-- AudioFX -->
-    <install-in-user-type package="org.lineageos.audiofx">
-        <install-in user-type="FULL" />
-        <install-in user-type="PROFILE" />
-        <do-not-install-in user-type="android.os.usertype.profile.CLONE" />
-    </install-in-user-type>
     <!-- Camera -->
     <install-in-user-type package="com.android.camera">
         <install-in user-type="FULL" />
@@ -118,6 +112,18 @@
     </install-in-user-type>
     <!-- Updater -->
     <install-in-user-type package="org.avium.updater">
+        <install-in user-type="FULL" />
+        <install-in user-type="PROFILE" />
+        <do-not-install-in user-type="android.os.usertype.profile.CLONE" />
+    </install-in-user-type>
+    <!-- CatShare -->
+    <install-in-user-type package="moe.reimu.catshare">
+        <install-in user-type="FULL" />
+        <install-in user-type="PROFILE" />
+        <do-not-install-in user-type="android.os.usertype.profile.CLONE" />
+    </install-in-user-type>
+    <!-- Note -->
+    <install-in-user-type package="cn.binbin.note">
         <install-in user-type="FULL" />
         <install-in user-type="PROFILE" />
         <do-not-install-in user-type="android.os.usertype.profile.CLONE" />

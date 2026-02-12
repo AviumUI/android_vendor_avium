@@ -41,6 +41,8 @@ function get_gms() {
 
     mkdir -p "$DST_DIR"
 
+    local force_sync=0
+
     if [ -f "$DST_XML" ]; then
         if diff -q "$SRC_XML" "$DST_XML" >/dev/null; then
             echo -e "${GREEN}pixel.xml already up to date.${RESET}"
@@ -48,6 +50,7 @@ function get_gms() {
             echo -e "${YELLOW}Local manifest differs from source:${RESET}"
             echo "  $DST_XML"
             echo
+            force_sync=1
 
             if [ -t 0 ]; then
                 echo -ne "${YELLOW}Overwrite with new pixel.xml? [y/N] ${RESET}"
@@ -91,7 +94,8 @@ function get_gms() {
                 vendor/pixel/sounds \
                 vendor/pixel/gms \
                 vendor/pixel/gsans \
-                -c -j5
+                -c -j5 \
+                $( [ "$force_sync" -eq 1 ] && echo "--force-sync" )
 
             local sync_ret=$?
 

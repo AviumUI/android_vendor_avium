@@ -44,13 +44,10 @@ PRODUCT_PACKAGES += \
     BtHelper \
     OmniJaws \
     Note \
-    PocketMode \
     DepthWallpaperHelper \
     AviumFreeWindow \
     AviumLyricBarCore \
     ColumbusService
-
-# TODO: Need GameSpace
 
 # Updater
 ifeq ($(AVIUM_IS_OFFICIAL),true)

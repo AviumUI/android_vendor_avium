@@ -33,7 +33,6 @@ endif # WITH_GMS
 PRODUCT_PACKAGES += \
     FeatureSettings \
     AviumSystemUITools \
-    MoonOCR \
     AviumUseful \
     MoonWidget \
     CatShareForAvium \

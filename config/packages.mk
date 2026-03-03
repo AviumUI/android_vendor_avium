@@ -46,7 +46,8 @@ PRODUCT_PACKAGES += \
     DepthWallpaperHelper \
     AviumFreeWindow \
     AviumLyricBarCore \
-    ColumbusService
+    ColumbusService \
+    Starmoment
 
 # Updater
 ifeq ($(AVIUM_IS_OFFICIAL),true)

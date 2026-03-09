@@ -1,12 +1,12 @@
-# 
+#
 # Copyright (C) 2025-2026 The AviumUI Project
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #      http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -142,8 +142,10 @@ function merge_file_parts() {
 
     part_prefix="$target_file"
     found_part=0
-
-    for part in $(ls "${part_prefix}".*.part 2>/dev/null); do
+    
+    for part in "${part_prefix}".*.part; do
+        [ -e "$part" ] || continue
+    
         if [ "$found_part" -eq 0 ]; then
             : > "$target_file"
             found_part=1
@@ -193,7 +195,7 @@ function avium_build() {
     source ${ANDROID_BUILD_TOP}/vendor/lineage/vars/aosp_target_release
     lunch lineage_$avium_device-$aosp_target_release-$avium_variant
     if ! [ $? -eq 0 ]; then
-        echo "ERROR: Unable to locate device configuration for $avium_device" 
+        echo "ERROR: Unable to locate device configuration for $avium_device"
         echo "       Please ensure the device codename is correct and the device tree is present."
         return 1
         exit 1

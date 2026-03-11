@@ -93,7 +93,6 @@ function get_gms() {
                 vendor/pixel/clocks \
                 vendor/pixel/sounds \
                 vendor/pixel/gms \
-                vendor/pixel/gsans \
                 -c -j5 \
                 $( [ "$force_sync" -eq 1 ] && echo "--force-sync" )
 

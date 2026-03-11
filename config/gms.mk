@@ -17,9 +17,6 @@
 # AviumUI GMS Configuration
 
 ifeq ($(WITH_GMS),true)
-# Override gsans if using gms
-TARGET_USES_GSANS := true
-
 # Disable Google IME in avium prebuilts
 TARGET_INCLUDE_GOOGLEIME := false
 TARGET_GOOGLEIME_OVERRIDE_IME := false
@@ -27,11 +24,6 @@ endif # WITH_GMS
 
 # Check if repository exists
 MISSING_DIRS :=
-ifeq ($(TARGET_USES_GSANS), true)
-ifeq ($(wildcard vendor/pixel/gsans),)
-MISSING_DIRS += vendor/pixel/gsans
-endif
-endif # TARGET_USES_GSANS
 ifeq ($(WITH_GMS), true)
 ifeq ($(wildcard vendor/pixel/gms),)
 MISSING_DIRS += vendor/pixel/gms
@@ -61,9 +53,7 @@ $(call inherit-product, vendor/pixel/gms/products/gms.mk)
 # Pixel Sounds
 $(call inherit-product, vendor/pixel/sounds/products/sounds.mk)
 endif # WITH_GMS
+endif # MISSING_DIRS
 
 # Pixel GSans
-ifeq ($(TARGET_USES_GSANS), true)
 $(call inherit-product, vendor/pixel/gsans/products/gsans.mk)
-endif # TARGET_USES_GSANS
-endif # MISSING_DIRS

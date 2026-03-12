@@ -247,7 +247,7 @@ function avium() {
 }
 
 function merge_files() {
-merge_file_parts "packages/apps/DepthWallpaperHelper/DepthWallpaperHelper.apk"
+merge_file_parts "vendor/avium-prebuilts/DepthWallpaperHelper/DepthWallpaperHelper.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/Maps/Maps.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/Photos/Photos.apk"
 merge_file_parts "vendor/pixel/gms/common/proprietary/product/app/PrebuiltGmail/PrebuiltGmail.apk"

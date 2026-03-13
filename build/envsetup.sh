@@ -143,7 +143,9 @@ function merge_file_parts() {
     part_prefix="$target_file"
     found_part=0
 
-    for part in $(ls "${part_prefix}".*.part 2>/dev/null); do
+    for part in "${part_prefix}".*.part; do
+        [ -e "$part" ] || continue
+
         if [ "$found_part" -eq 0 ]; then
             : > "$target_file"
             found_part=1

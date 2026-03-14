@@ -29,3 +29,4 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.hide_sysapp_notifs=$(AVIUM_HIDE_S
    
 # Popup View
 PRODUCT_SYSTEM_EXT_PROPERTIES += persist.avium.popup_view=bubble
+PRODUCT_PRODUCT_PROPERTIES += ro.rising.feature.pop_up_view=true

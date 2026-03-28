@@ -29,6 +29,38 @@ function get_gms() {
         return 1
     fi
 
+    local cli_mode=0
+    local cli_update_local_manifests=0
+    local cli_run_sync=0
+    local arg=""
+
+    for arg in "$@"; do
+        if [ "$arg" = "--cli" ]; then
+            cli_mode=1
+            break
+        fi
+    done
+
+    if [ "$cli_mode" -eq 1 ]; then
+        for arg in "$@"; do
+            case "$arg" in
+                --cli)
+                    ;;
+                --update-local-manifests)
+                    cli_update_local_manifests=1
+                    ;;
+                --run-sync)
+                    cli_run_sync=1
+                    ;;
+                *)
+                    echo -e "${RED}error:${RESET} unknown get_gms argument: $arg"
+                    echo "Usage: avium get_gms [--cli [--update-local-manifests] [--run-sync]]"
+                    return 1
+                    ;;
+            esac
+        done
+    fi
+
     local SRC_XML="$TOP/vendor/avium/manifest_snippets/pixel.xml"
     local DST_DIR="$TOP/.repo/local_manifests"
     local DST_XML="$DST_DIR/pixel.xml"
@@ -52,7 +84,13 @@ function get_gms() {
             echo
             force_sync=1
 
-            if [ -t 0 ]; then
+            if [ "$cli_mode" -eq 1 ]; then
+                if [ "$cli_update_local_manifests" -eq 1 ]; then
+                    answer="y"
+                else
+                    answer="n"
+                fi
+            elif [ -t 0 ]; then
                 echo -ne "${YELLOW}Overwrite with new pixel.xml? [y/N] ${RESET}"
                 IFS= read -r answer
             else
@@ -76,7 +114,13 @@ function get_gms() {
 
     echo
 
-    if [ -t 0 ]; then
+    if [ "$cli_mode" -eq 1 ]; then
+        if [ "$cli_run_sync" -eq 1 ]; then
+            sync_answer="y"
+        else
+            sync_answer="n"
+        fi
+    elif [ -t 0 ]; then
         echo -ne "${YELLOW}Sync GMS repositories now? [y/N] ${RESET}"
         IFS= read -r sync_answer
     else
@@ -231,7 +275,8 @@ function avium() {
     fi
     case "$1" in
         get_gms)
-            get_gms
+            shift
+            get_gms "$@"
             ;;
         remove_gms)
             remove_gms
@@ -243,6 +288,7 @@ function avium() {
             echo "Usage: avium [build|get_gms|remove_gms]"
             echo "       build       - Build Avium for a specific device and variant"
             echo "       get_gms     - Download GMS files"
+            echo "                     CLI mode: avium get_gms --cli [--update-local-manifests] [--run-sync]"
             echo "       remove_gms  - Remove GMS files"
             ;;
     esac

@@ -175,13 +175,17 @@ function remove_gms() {
 
 function merge_file_parts() {
     target_file="$1"
+    remerge_mode=0
 
     if [ -z "$target_file" ]; then
         echo -e "merge_file_parts(): ${RED}ERROR: merge_file_parts() requires a target file path.${RESET}" >&2
         return 1
     fi
 
-    [ -f "$target_file" ] && return 0
+    if [ -f "$target_file" ]; then
+        rm -rf $target_file
+        remerge_mode=1
+    fi
 
     part_prefix="$target_file"
     found_part=0
@@ -198,8 +202,10 @@ function merge_file_parts() {
 
     [ "$found_part" -eq 0 ] && return 0
 
+    if [ "$remerge_mode" != "1" ]; then
     if [ -s "$target_file" ]; then
         echo -e "merge_file_parts(): ${GREEN}Merged: $target_file${RESET}"
+    fi
     fi
 }
 

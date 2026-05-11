@@ -41,7 +41,6 @@ PRODUCT_PACKAGES += \
     AviumLockscreenEdit \
     AviumSystemUIEX \
     BtHelper \
-    OmniJaws \
     Note \
     DepthWallpaperHelper \
     AviumFreeWindow \

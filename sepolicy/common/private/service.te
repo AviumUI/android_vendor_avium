@@ -1,3 +1,4 @@
 type resolution_ext_service, system_api_service, protected_service, service_manager_type;
 type freeform_service, system_api_service, system_server_service, service_manager_type;
+type gms_manager_service, system_api_service, system_server_service, service_manager_type;
 type sensor_block_service, app_api_service, ephemeral_app_api_service, system_api_service, system_server_service, service_manager_type;

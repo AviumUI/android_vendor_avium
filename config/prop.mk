@@ -16,7 +16,8 @@
 
 # Enable blur if maintainer asked
 ifeq ($(TARGET_FORCE_ENABLE_BLUR), true)
-PRODUCT_PRODUCT_PROPERTIES += ro.surface_flinger.supports_background_blur=1
+PRODUCT_PRODUCT_PROPERTIES += ro.surface_flinger.supports_background_blur=1 \
+   ro.sf.blurs_are_expensive=1
 endif # TARGET_FORCE_ENABLE_BLUR
 
 PRODUCT_BUILD_PROP_OVERRIDES += \

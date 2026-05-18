@@ -3,5 +3,8 @@ resolution_ext    u:object_r:resolution_ext_service:s0
 # Freeform
 freeform_overlay    u:object_r:freeform_service:s0
 
+# GMS Manager
+gms_manager    u:object_r:gms_manager_service:s0
+
 # Sensor Block
 sensor_block    u:object_r:sensor_block_service:s0

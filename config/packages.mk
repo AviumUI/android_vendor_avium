@@ -46,7 +46,8 @@ PRODUCT_PACKAGES += \
     AviumFreeWindow \
     AviumLyricBarCore \
     ColumbusService \
-    Starmoment
+    Starmoment \
+    ScreenshotEdit
 
 # Updater
 ifeq ($(AVIUM_IS_OFFICIAL),true)

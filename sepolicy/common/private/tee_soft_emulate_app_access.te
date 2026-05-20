@@ -1,0 +1,5 @@
+# TEE soft emulate runtime files under /data/system/avium.
+allow platform_app avium_data_file:dir create_dir_perms;
+allow platform_app avium_data_file:file create_file_perms;
+allow system_app avium_data_file:dir create_dir_perms;
+allow system_app avium_data_file:file create_file_perms;

@@ -3,6 +3,11 @@ on post-fs-data
     mkdir /metadata/avium 0770 system system
     mkdir /data/system/avium 0775 system system
     restorecon_recursive /data/system/avium
+    # TEE soft debug runtime
+    # read by keystore2.
+    mkdir /data/system/avium/tee_soft_debug 0755 system system
+    chown system system /data/system/avium/tee_soft_debug
+    chmod 0755 /data/system/avium/tee_soft_debug
 
 on property:persist.avium.depthwallpaper=0
     copy /system_ext/media/wallpaper/mask /data/system/avium/mask

@@ -251,6 +251,168 @@ function avium_build() {
     fi
     mka $avium_target -j$(nproc --all)
 }
+function avium_gerrit() {
+    local subcommand="$1"
+    shift
+
+    case "$subcommand" in
+        init)
+            avium_gerrit_init
+            ;;
+        push_for_review)
+            avium_gerrit_push_for_review
+            ;;
+        *)
+            echo "Usage: avium gerrit [init|push_for_review]"
+            echo "       init - Initialize git user info and Avium Gerrit config"
+            echo "       push_for_review - Push changes to Avium Gerrit for review"
+            ;;
+    esac
+}
+
+function avium_gerrit_init() {
+    if ! [ -n "$TOP" ]; then
+        echo "Couldn't locate the top of the tree.  Try setting TOP."
+        return 1
+    fi
+
+    if ! command -v git >/dev/null 2>&1; then
+        echo "git is not installed or not on PATH."
+        return 1
+    fi
+
+    echo "AviumUI Gerrit URL is https://review.aviumui.org"
+    git config --global avium.gerrit.host "review.aviumui.org:29418"
+
+    echo "Configure global git user information and Avium Gerrit username."
+    echo "This information is used for commits and Gerrit interactions."
+    echo "You can leave any field empty to keep the current value or use the default."
+    echo "Press Ctrl+C to skip configuration or if you want to set these manually later."
+    echo "Note: The Avium Gerrit username need you to register on the Avium Gerrit web interface first before using it here."
+    echo "So if you haven't registered yet, you can just press Enter to use the default value and update it later after registration."
+    echo
+    sleep 3s
+  
+    local prompts=(
+        "Git user name"
+        "Git user email"
+        "AviumUI Gerrit username"
+    )
+    local defaults=(
+        "${AVIUM_GERRIT_NAME:-Avium Gerrit User}"
+        "${AVIUM_GERRIT_EMAIL:-avium@example.com}"
+        "${AVIUM_GERRIT_USERNAME:-avium}"
+    )
+    local keys=(
+        "user.name"
+        "user.email"
+        "avium.gerrit.username"
+    )
+
+    for i in "${!keys[@]}"; do
+        echo "${prompts[$i]} (current: $(git config --global --get "${keys[$i]}" 2>/dev/null || "not set"))"
+    done
+
+    local key current value answer
+
+    for i in "${!keys[@]}"; do
+        key="${keys[$i]}"
+        current=$(git config --global --get "$key" 2>/dev/null || true)
+
+        if [ -n "$current" ]; then
+            echo "$key already configured as '$current'."
+            echo -n "Keep this value? [Y/n] "
+            IFS= read -r answer
+            if [ -z "$answer" ] || [[ "$answer" =~ ^[Yy]$ ]]; then
+                echo "Keeping $key='$current'"
+                continue
+            fi
+            echo -n "Enter new ${prompts[$i]} (leave empty to keep current): "
+            IFS= read -r value
+            if [ -z "$value" ]; then
+                echo "Keeping $key='$current'"
+                continue
+            fi
+        else
+            local default="${defaults[$i]}"
+            echo -n "Enter ${prompts[$i]} [${default}]: "
+            IFS= read -r value
+            if [ -z "$value" ]; then
+                value="$default"
+            fi
+        fi
+
+        git config --global "$key" "$value"
+        echo "Configured $key = '$value'"
+    done
+
+    echo "Git and Avium Gerrit configuration complete."
+}
+
+function avium_gerrit_push_for_review() {
+    if ! [ -n "$TOP" ]; then
+        echo "Couldn't locate the top of the tree.  Try setting TOP."
+        return 1
+    fi
+
+    if ! command -v git >/dev/null 2>&1; then
+        echo "git is not installed or not on PATH."
+        return 1
+    fi
+
+    local gerrit_host=$(git config --global --get avium.gerrit.host)
+    if [ -z "$gerrit_host" ]; then
+        echo "Avium Gerrit host is not configured. Please run 'avium gerrit init' first."
+        return 1
+    fi
+
+    local gerrit_user=$(git config --global --get avium.gerrit.username)
+    if [ -z "$gerrit_user" ] || [ "$gerrit_user" = "avium" ]; then
+        echo "Avium Gerrit username is not configured. Please run 'avium gerrit init' first."
+        return 1
+    fi
+
+    # Try to get repository name from multiple sources
+    local repo_name=""
+    
+    # Method 1: Try from git remote origin URL
+    local remote_url=$(git config --get remote.avium.url 2>/dev/null || true)
+    if [ -n "$remote_url" ]; then
+        repo_name=$(basename "$remote_url" | sed 's/\.git$//')
+    fi
+    
+    
+    # Method 2: Prompt user if unable to determine
+    if [ -z "$repo_name" ] || [ "$repo_name" = "unknown" ]; then
+        echo "Could not automatically determine repository name."
+        echo "Please enter the repository name (e.g., 'android_manifests'):"
+        read -r repo_name
+        if [ -z "$repo_name" ]; then
+            echo "No repository name provided. Aborting."
+            return 1
+        fi
+    fi
+    
+    local gerrit_remote_url="ssh://$gerrit_user@$gerrit_host/$repo_name"
+    local current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)
+    if [ -z "$current_branch" ]; then
+        echo "Unable to determine current git branch."
+        echo "Please input the branch you want to push for review:"
+        read -r current_branch
+        if [ -z "$current_branch" ]; then
+            echo "No branch specified. Aborting."
+            return 1
+        fi
+    fi
+    local push_ref="HEAD:refs/for/$current_branch"
+    
+    echo "Repository name: $repo_name"
+    echo "Gerrit URL: $gerrit_remote_url"
+    echo "Pushing current branch '$current_branch' to Avium Gerrit for review..."
+    git push "$gerrit_remote_url" "$push_ref"
+}
+
+
 
 function gen_keys() {
     if ! [ -n "$TOP" ];then
@@ -290,12 +452,16 @@ function avium() {
         build)
             avium_build "$2" "$3" "$4" "$5" "$6" "$7" "$8"
             ;;
+        gerrit)
+            avium_gerrit "$2" "$3" "$4" "$5" "$6" "$7" "$8"
+            ;;
         *)
-            echo "Usage: avium [build|get_gms|remove_gms]"
+            echo "Usage: avium [build|get_gms|remove_gms|gerrit] [options]"
             echo "       build       - Build Avium for a specific device and variant"
             echo "       get_gms     - Download GMS files"
             echo "                     CLI mode: avium get_gms --cli [--update-local-manifests] [--run-sync]"
             echo "       remove_gms  - Remove GMS files"
+            echo "       gerrit      - Gerrit utilities for AviumUI development"
             ;;
     esac
 }
